@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="11134" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="11134"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -618,7 +620,7 @@
                                         <menuItem title="Show Sidebar" keyEquivalent="s" id="kIP-vf-haE">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
-                                                <action selector="toggleSourceList:" target="Ady-hI-5gd" id="iwa-gc-5KM"/>
+                                                <action selector="toggleSidebar:" target="Ady-hI-5gd" id="iwa-gc-5KM"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
@@ -673,7 +675,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="MacOs_JsonToDataBase" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -686,7 +688,7 @@
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="270"/>
+                        <rect key="contentRect" x="196" y="240" width="1020" height="284"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
@@ -698,20 +700,430 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="250"/>
+            <point key="canvasLocation" x="345" y="257"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="MacOs_JsonToDataBase" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" wantsLayer="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1028" height="529"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Do-nf-RVE">
+                                <rect key="frame" x="10" y="80" width="533" height="439"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="5DH-rx-EI8">
+                                    <rect key="frame" x="0.0" y="0.0" width="518" height="439"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="pnC-66-3On">
+                                            <rect key="frame" x="0.0" y="0.0" width="518" height="3878"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <size key="minSize" width="518" height="439"/>
+                                            <size key="maxSize" width="746" height="10000000"/>
+                                            <attributedString key="textStorage">
+                                                <fragment>
+                                                    <mutableString key="content">{
+  "status": 1,
+  "message": "Pool",
+  "code": 200,
+  "result": {
+    "data": [
+      {
+        "id": "569835685523116032",
+        "base_score": 1,
+        "number_of_click": 0,
+        "number_of_author": 0,
+        "number_of_channel": 0,
+        "author_name": "",
+        "channel": "",
+        "ppr": 1,
+        "publish_date": 1555904614,
+        "instance_type": 0,
+        "card_type": 15,
+        "card": {
+          "id": "569835685523116032",
+          "title": "https://vnexpress.net/the-gioi",
+          "card_type": 15,
+          "mediaunit_name": "Tin nóng trong ngày",
+          "frame_id": 0,
+          "data": [
+            {
+              "image": {
+                "height": 292,
+                "thumb": "https://s.vnecdn.net/vnexpress/restruct/i/v75/logo_default.jpg",
+                "width": 560
+              },
+              "link": "https://vnexpress.net/the-gioi",
+              "sourse": "Tin nhanh VnExpress",
+              "title": "Hú hú"
+            }
+          ],
+          "user": {
+            "id": 1450396749796327,
+            "user_name": "King9_nvt010493",
+            "full_name": "Ngo Thuy",
+            "avatar": "http://kingcontent.mediacdn.vn/2019/4/11/binh3bjn9nlr49agnckg_image1554977194308.867.jpeg",
+            "follow": 0,
+            "is_follow": 0,
+            "type": 0
+          },
+          "card_info": {
+            "tags": [],
+            "feeling": "",
+            "is_comment": 0,
+            "location": "",
+            "liked": 0,
+            "privacy": 0,
+            "share": 0,
+            "total_like": 0,
+            "total_comment": 0,
+            "views": 0,
+            "created_at": 1555904614,
+            "total_repost": 0,
+            "total_post": 0,
+            "total_send": 0
+          },
+          "like": {
+            "total": 0,
+            "type": [],
+            "data": []
+          },
+          "comment": {
+            "total": 0,
+            "data": []
+          }
+        }
+      },
+      {
+        "id": "569821832316514304",
+        "base_score": 1,
+        "number_of_author": 0,
+        "number_of_channel": 0,
+        "author_name": "",
+        "channel": "",
+        "ppr": 1,
+        "publish_date": 1555901311,
+        "instance_type": 0,
+        "number_of_click": 0,
+        "card_type": 6,
+        "card": {
+          "id": "569821832316514304",
+          "title": "Mỗi ngày là một niềm vui",
+          "card_type": 6,
+          "mediaunit_name": "",
+          "frame_id": 0,
+          "data": [
+            {
+              "content_type": 2,
+              "duration": null,
+              "height": 1300,
+              "id": "1e609ed064a911e98c1adf8860715c0e",
+              "is_play": 0,
+              "link": "http://kingcontent.mediacdn.vn/2019/4/22/5583311120327793634439431461324792392056832ojpgnccat106ncocaqkhfkyacxa8jon0b3zmdhtje0nlhlzb6ur0okd41hht2uk1gh8nxx1rmeyd31yi2enchtscontentfhan2-2-1555901277317744807996.jpg",
+              "postion": 0,
+              "thumb": null,
+              "title": "Rừng núi",
+              "type": null,
+              "width": 1920
+            },
+            {
+              "content_type": 2,
+              "duration": null,
+              "height": 1224,
+              "id": "1e5fdb8064a911e98c1adf8860715c0e",
+              "is_play": 0,
+              "link": "http://kingcontent.mediacdn.vn/2019/4/22/5586107820328180534400744616011406976745472ojpgnccat100ncocaqmipljt35ciwcv0dgqrj9mc-xfcp70pwjh-rrkmf77hd-s9knnjxvw1kutalnf8egnchtscontentfhan2-4-155590127732248184968.jpg",
+              "postion": 0,
+              "thumb": null,
+              "title": "Nội thất đẹp",
+              "type": null,
+              "width": 1848
+            }
+          ],
+          "user": {
+            "id": 169922250,
+            "user_name": "cherryhue",
+            "full_name": "Cherry Huệ",
+            "avatar": "http://kingcontent.mediacdn.vn/2019/4/22/5027874123114761190831075459812012072632320njpgnccat105ncocaqkpniyrpjtnp5yrgqczpx9urkp9qjjzsn3szwif2jqnnqqeaidb6hwbtmwwhviibinchtscontentfhan2-4-1555900229187593904712.jpg",
+            "follow": 0,
+            "is_follow": 0,
+            "type": 0
+          },
+          "card_info": {
+            "tags": [],
+            "feeling": "",
+            "is_comment": 0,
+            "location": "",
+            "liked": 0,
+            "privacy": 0,
+            "share": 0,
+            "total_like": 0,
+            "total_comment": 0,
+            "views": 0,
+            "created_at": 1555901311,
+            "total_repost": 0,
+            "total_post": 0,
+            "total_send": 0
+          },
+          "like": {
+            "total": 0,
+            "type": [],
+            "data": []
+          },
+          "comment": {
+            "total": 0,
+            "data": []
+          }
+        }
+      },
+      {
+        "id": "569821574060634112",
+        "base_score": 1,
+        "number_of_click": 0,
+        "number_of_author": 0,
+        "number_of_channel": 0,
+        "author_name": "",
+        "channel": "",
+        "ppr": 1,
+        "publish_date": 1555901249,
+        "instance_type": 0,
+        "card_type": 6,
+        "card": {
+          "id": "569821574060634112",
+          "title": "Một ngày trời đầy nắng",
+          "card_type": 6,
+          "mediaunit_name": "",
+          "frame_id": 0,
+          "data": [
+            {
+              "content_type": 2,
+              "duration": null,
+              "height": 1348,
+              "id": "f9ca516064a811e98c1adf8860715c0e",
+              "is_play": 0,
+              "link": "http://kingcontent.mediacdn.vn/2019/4/22/562424652032709806784232584912509207576576ojpgnccat103ncocaqnneibcslal2otpcmgpnyauxrh1k7zhoskyq1i160btjgivwk80atgqhimcyyq0-ynchtscontentfhan2-1-15559011962371265254297.jpg",
+              "postion": 0,
+              "thumb": null,
+              "title": "Ngôi nhà nhỏ trên mây",
+              "type": null,
+              "width": 2000
+            },
+            {
+              "content_type": 2,
+              "duration": null,
+              "height": 886,
+              "id": "f9c8a3b064a811e98c1adf8860715c0e",
+              "is_play": 0,
+              "link": "http://kingcontent.mediacdn.vn/2019/4/22/5646826520328290534389745389681565565452288njpgnccat111ncocaqkupauq4m2gbqnqdcbpdfejzr6mktkgqdgtuhzoa0pvffqgpb1knuqjlowwh7bpmynchtscontentfhan2-2-15559011962432108974406.jpg",
+              "postion": 0,
+              "thumb": null,
+              "title": "Trời đẹp và xanh bao la",
+              "type": null,
+              "width": 960
+            },
+            {
+              "content_type": 2,
+              "duration": null,
+              "height": 1038,
+              "id": "f9c8f1d064a811e98c1adf8860715c0e",
+              "is_play": 0,
+              "link": "http://kingcontent.mediacdn.vn/2019/4/22/5620514620328352834383512633068896684343296ojpgnccat108ncocaqmgqpfvxlrn-9tslef8ctf2felyu2buk4wnltwysni6rnovsrcfmub-vnt-nnetgtgnchtscontentfhan2-3-1555901196248438389877.jpg",
+              "postion": 0,
+              "thumb": null,
+              "title": "Cảnh sắc về đêm",
+              "type": null,
+              "width": 2000
+            }
+          ],
+          "user": {
+            "id": 169922250,
+            "user_name": "cherryhue",
+            "full_name": "Cherry Huệ",
+            "avatar": "http://kingcontent.mediacdn.vn/2019/4/22/5027874123114761190831075459812012072632320njpgnccat105ncocaqkpniyrpjtnp5yrgqczpx9urkp9qjjzsn3szwif2jqnnqqeaidb6hwbtmwwhviibinchtscontentfhan2-4-1555900229187593904712.jpg",
+            "follow": 0,
+            "is_follow": 0,
+            "type": 0
+          },
+          "card_info": {
+            "tags": [],
+            "feeling": "",
+            "is_comment": 0,
+            "location": "",
+            "liked": 0,
+            "privacy": 0,
+            "share": 0,
+            "total_like": 0,
+            "total_comment": 0,
+            "views": 0,
+            "created_at": 1555901249,
+            "total_repost": 0,
+            "total_post": 0,
+            "total_send": 0
+          },
+          "like": {
+            "total": 0,
+            "type": [],
+            "data": []
+          },
+          "comment": {
+            "total": 0,
+            "data": []
+          }
+        }
+      }
+    ],
+    "boxId": 2,
+    "dspId": "2",
+    "algId": "2"
+  }
+}</mutableString>
+                                                    <attributes>
+                                                        <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                        <font key="NSFont" metaFont="user"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="pQi-hK-xDe">
+                                    <rect key="frame" x="-100" y="-100" width="518" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="LKf-e0-vvt">
+                                    <rect key="frame" x="518" y="0.0" width="15" height="439"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Et9-3x-fVe">
+                                <rect key="frame" x="580" y="430" width="150" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Using for Realm DB" bezelStyle="regularSquare" imagePosition="left" inset="2" id="P1Y-t6-GYJ">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gIt-nu-Zbt">
+                                <rect key="frame" x="810" y="430" width="159" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="check" title="Using Deep NSCopy" bezelStyle="regularSquare" imagePosition="left" inset="2" id="H3D-sV-ioL">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SDv-B5-HkN">
+                                <rect key="frame" x="740" y="31" width="89" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Convert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dni-iQ-rDk">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="btnConvertPress:" target="XfG-lQ-9wD" id="rzu-TX-UnW"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GQT-cL-VNR">
+                                <rect key="frame" x="529" y="37" width="94" height="23"/>
+                                <buttonCell key="cell" type="roundTextured" title="Select Folder" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HI3-an-0LZ">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="btnSelecteFolder:" target="XfG-lQ-9wD" id="oWK-ny-HhC"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bB0-o8-hVh">
+                                <rect key="frame" x="10" y="38" width="514" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" bezelStyle="round" id="HRe-BK-zr3">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qd8-UZ-awc">
+                                <rect key="frame" x="582" y="487" width="128" height="22"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" placeholderString="Root Class Name" bezelStyle="round" id="4iJ-UP-K1D">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gdu-D3-YMI">
+                                <rect key="frame" x="833" y="487" width="128" height="22"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="Prefix " placeholderString="Prefix" bezelStyle="round" id="WqP-dW-W85">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Leq-gV-zBk">
+                                <rect key="frame" x="551" y="80" width="467" height="260"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="LuW-sV-cyb">
+                                    <rect key="frame" x="0.0" y="0.0" width="452" height="260"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView ambiguous="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="KDa-V4-QPT">
+                                            <rect key="frame" x="0.0" y="0.0" width="452" height="260"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <size key="minSize" width="452" height="260"/>
+                                            <size key="maxSize" width="467" height="10000000"/>
+                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="wnK-XN-hrE">
+                                    <rect key="frame" x="-100" y="-100" width="188" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Wzj-uB-qSi">
+                                    <rect key="frame" x="452" y="0.0" width="15" height="260"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z2Q-oZ-mfB">
+                                <rect key="frame" x="744" y="372" width="71" height="17"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Log Debug" id="98u-ZJ-2ZB">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="GQT-cL-VNR" firstAttribute="centerY" secondItem="bB0-o8-hVh" secondAttribute="centerY" id="8bT-5X-x0J"/>
+                            <constraint firstItem="bB0-o8-hVh" firstAttribute="top" secondItem="6Do-nf-RVE" secondAttribute="bottom" constant="20" id="Akb-vI-SfZ"/>
+                            <constraint firstItem="GQT-cL-VNR" firstAttribute="height" secondItem="bB0-o8-hVh" secondAttribute="height" id="GtL-oy-zIe"/>
+                            <constraint firstItem="bB0-o8-hVh" firstAttribute="width" secondItem="6Do-nf-RVE" secondAttribute="width" constant="-19" id="Kwv-HZ-RUa"/>
+                            <constraint firstAttribute="bottom" secondItem="6Do-nf-RVE" secondAttribute="bottom" constant="80" id="NZj-Hu-mLq"/>
+                            <constraint firstItem="6Do-nf-RVE" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="QEK-lT-ZU6"/>
+                            <constraint firstItem="6Do-nf-RVE" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="10" id="cT4-g5-Sfm"/>
+                            <constraint firstItem="GQT-cL-VNR" firstAttribute="leading" secondItem="bB0-o8-hVh" secondAttribute="trailing" constant="5" id="dw4-Ym-fYn"/>
+                            <constraint firstItem="6Do-nf-RVE" firstAttribute="width" secondItem="m2S-Jp-Qdl" secondAttribute="width" multiplier="5:10" constant="19" id="hg2-sb-jWx"/>
+                            <constraint firstItem="bB0-o8-hVh" firstAttribute="centerX" secondItem="6Do-nf-RVE" secondAttribute="centerX" constant="-9.5" id="jeK-8a-ts7"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cbxUseDB" destination="Et9-3x-fVe" id="mkC-sr-BEG"/>
+                        <outlet property="txtPrefix" destination="Gdu-D3-YMI" id="zPO-el-3R3"/>
+                        <outlet property="txtRootClassName" destination="Qd8-UZ-awc" id="vTb-bh-XNm"/>
+                        <outlet property="txtUrl" destination="bB0-o8-hVh" id="gr8-2I-DxF"/>
+                        <outlet property="txvLog" destination="KDa-V4-QPT" id="BvQ-qI-w2z"/>
+                        <outlet property="txvView" destination="pnC-66-3On" id="DEn-FC-2aX"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="349" y="730.5"/>
         </scene>
     </scenes>
 </document>
