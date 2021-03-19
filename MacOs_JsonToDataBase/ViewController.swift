@@ -9,80 +9,20 @@
 import Cocoa
 
 class ViewController: NSViewController {
-    var data = [String]()
-    var classNameDeclare = [String]()
-    var dataRealm = [String]()
+    
+    var dictObject: [String: [String: CTLValueType]] = [:]
+    
     var selectedFolder: URL?
-    var listKeyWord =
-    [
-    "class",
-    "operator",
-    "deinit",
-    "enum",
-    "extension",
-    "func",
-    "import",
-    "init",
-    "let",
-    "protocol",
-    "static",
-    "struct",
-    "subscript",
-    "typealias",
-    "var",
-    "break",
-    "case",
-    "continue",
-    "default",
-    "do",
-    "else",
-    "fallthrough",
-    "if",
-    "in",
-    "for",
-    "return",
-    "switch",
-    "where",
-    "while",
-    "as",
-    "is",
-    "new",
-    "super",
-    "self",
-    "Self",
-    "Type",
-    "associativity",
-    "didSet",
-    "get",
-    "infix",
-    "inout",
-    "mutating",
-    "nonmutating",
-    "operator",
-    "override",
-    "postfix",
-    "precedence",
-    "prefix",
-    "set",
-    "unowned",
-    "weak",
-    "Any",
-    "AnyObject"
-    ]
-    var listDataTypeKeyWord =
-        [
-            "data",
-            "date",
-            "string",
-            "int",
-            "double",
-            "float",
-            "color",
-            "var",
-            "weak",
-            "strong"
-            ]
+    
+    var usingInt64 = true
+    var usingForceUnwrapping = true
+    
+    var listKeyWord = Constants.listKeyWord
+    var listDataTypeKeyWord = Constants.listDataTypeKeyWord
+    
     @IBOutlet weak var cbxUseDB: NSButton!
+    @IBOutlet weak var cbxDeepCopy: NSButton!
+    @IBOutlet weak var cbxUseJsonInit: NSButton!
     @IBOutlet var txvView: NSTextView!
     @IBOutlet weak var txtRootClassName: NSTextField!
     @IBOutlet weak var txtPrefix: NSTextField!
@@ -92,14 +32,15 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
-        if let url = UserDefaults.standard.url(forKey: "kSelectedFolder"){
+        if let url = UserDefaults.standard.url(forKey: Constants.kSelectedFolder){
             self.selectedFolder = url
             self.txtUrl.stringValue = self.selectedFolder?.path ?? ""
         }
+        
         let dateFirst = UserDefaults.standard.double(forKey: "dateFirst")
-        if dateFirst <= 0{
+        if dateFirst <= 0 {
             let dateF = Date().timeIntervalSince1970
             UserDefaults.standard.set(dateF, forKey: "dateFirst")
             print("First date = \(dateF)")
@@ -107,28 +48,41 @@ class ViewController: NSViewController {
         }
         
     }
-
+    
     override var representedObject: Any? {
         didSet {
-        // Update the view, if already loaded.
+            // Update the view, if already loaded.
         }
     }
+    
     //MARK: -Action
     @IBAction func btnConvertPress(_ sender: Any) {
+        
         let jsonText = txvView.string
+        
         let dic = self.convertStringToDictionary(jsonText: jsonText)
-        let fileName = (self.txtRootClassName.stringValue != nil && self.txtRootClassName.stringValue != "" ) ? self.txtRootClassName.stringValue : "CTLClass"
-        self.genCode(key: fileName, dic: dic)
-        let isUseDB : Bool = cbxUseDB.state.rawValue == 1 ? true : false
-        if isUseDB{
-            data.append(contentsOf: dataRealm)
+        
+        var fileName: String = Constants.defaultClassName
+        if self.txtRootClassName.stringValue.isEmpty == false  {
+            fileName = self.txtRootClassName.stringValue
         }
         
-        self.writeToDesktop(list: data)
-//        self.writeToDesktop(list: dataRealm)
+        let usingInt64 = self.usingInt64
         
+        self.convertJsonToObject(objectName: fileName, dic: dic, listRequireProperty: [], usingInt64: usingInt64)
         
+        let symbol: CTLSymbol = usingForceUnwrapping == true ? .forceUnwrap : .optional
+        let isUsingDB = cbxUseDB.state.rawValue == 1 ? true : false
+        let isDeepCopy = cbxDeepCopy.state.rawValue == 1 ? true : false
+        let isUsingJsonInit = cbxUseJsonInit.state.rawValue == 1 ? true : false
+        
+        let result = self.convertToString(symbol: symbol,
+                                          isUsingDB: isUsingDB,
+                                          isUsingDeepCopy: isDeepCopy,
+                                          isUsingJsonInit: isUsingJsonInit)
+        self.writeToDesktop(string: result)
     }
+    
     @IBAction func btnSelecteFolder(_ sender: Any) {
         guard let window = view.window else { return }
         
@@ -138,294 +92,70 @@ class ViewController: NSViewController {
         panel.allowsMultipleSelection = false
         
         panel.beginSheetModal(for: window) { (result) in
-            if result.rawValue == NSFileHandlingPanelOKButton {
+            if result == NSApplication.ModalResponse.OK {
                 self.selectedFolder = panel.urls[0]
                 self.txtUrl.stringValue = self.selectedFolder?.path ?? ""
-                UserDefaults.standard.set(self.selectedFolder, forKey: "kSelectedFolder")
+                UserDefaults.standard.set(self.selectedFolder, forKey: Constants.kSelectedFolder)
                 UserDefaults.standard.synchronize()
                 
             }
         }
     }
     
-    
-    func convertStringToDictionary(jsonText: String)-> [String : Any]{
-        if let data = jsonText.data(using: String.Encoding.utf8){
-            if let dic = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments){
-                return dic as! [String : Any]
-            }
+    @IBAction func rbtnIntWasTapped(_ sender: Any) {
+        if let rbtn = sender as? NSButton {
+            usingInt64 = rbtn.tag == 1
         }
-        print(" Khong phai json")
-        self.showLog(log: "Khong phai json")
-        return [String : Any]()
     }
     
-    func genCode(key : String, dic : [String : Any]){
-        data = [String]()
-        dataRealm = [String]()
-        data.append(self.convertJsonToObject(key: key, dic: dic, listRequireProperty: [String]() ) )
-    }
-    
-    func convertJsonToObject(key : String, dic : [String : Any], listRequireProperty : [String]) -> String{
-        if listRequireProperty.count > 0{
-            print("listRequireProperty count = \(listRequireProperty.count)")
-            
-            print("dic = \(dic)")
+    @IBAction func rbtnOptionalWasTapped(_ sender: Any) {
+        if let rbtn = sender as? NSButton {
+            usingForceUnwrapping = rbtn.tag == 1
         }
-        let isUseDB : Bool = cbxUseDB.state.rawValue == 1 ? true : false
-        
-        /// declaare property
-        var stringProperty = ""
-        
-        /// declare func init, list parameter
-        var stringInit = ""
-        
-        /// decalare func wrapTo DataBaseObject of Realm , list parameter
-        var stringWrap = "\tfunc wrapToDO\(self.upperCase(className: key))Object() -> DO_\(self.upperCase(className: key)){\n"
-        
-        /// declare content of func wrapTo
-        var stringWrapContent = "\t\tlet model = DO_\(self.upperCase(className: key))("
-        /// declare content of func init
-        var stringInitContent = "\t\tself.init()\n"
-        
-        
-        /// Declara property for Realm Object
-        var stringPropertyRealm = ""
-        /// declare content of func wrap RealmObject to Object for using, list parameter
-        var stringWrapRealm = "\tfunc wrapTo\(self.upperCase(className: key))Object() -> \(self.upperCase(className: key)){\n"
-        /// declare content of func wrap RealmObject to Object for using
-        var stringWrapContentRealm = "\t\tlet model = \(self.upperCase(className: key))("
-        
-        // class root
-        
-        stringProperty +=  "public class \(self.upperCase(className: key)){\n"
-        stringInit += "\tpublic convenience init("
-        
-        stringPropertyRealm +=  "public class DO_\(self.upperCase(className: key)) : Object {\n"
-        
-        //create class
-        var stringListParam = ""
-        
-        let listKeys = dic.keys
-        for pkey in listKeys{
-            var optionalSymbol = "!"
-            var optionalSymbolForDeclare = ""
-            if listRequireProperty.count > 0{
-                optionalSymbol = listRequireProperty.contains(pkey) ? "!" : "?"
-                optionalSymbolForDeclare = listRequireProperty.contains(pkey) ? "" : "?"
-            }
-            
-            if let value = dic[pkey]{
-                let lKey = self.lowerCase(propertyName: pkey)
-                if value is String{
-                    //create property
-                    stringProperty += self.createPropertyString(key: pkey, value: value as! String, optionalSymbol: optionalSymbol,isRealm: false)
-                    stringListParam += "\(lKey) : String\(optionalSymbolForDeclare), "
-                    stringPropertyRealm += self.createPropertyString(key: pkey, value: value as! String, optionalSymbol: optionalSymbol,isRealm: true)
-                }else if value is Int64{
-                    //create property
-                    stringProperty += self.createPropertyNumber(key: pkey, value: value as! Int64,optionalSymbol: optionalSymbol, isRealm: false)
-                    stringListParam += "\(lKey) : Int64\(optionalSymbolForDeclare), "
-                    stringPropertyRealm += self.createPropertyNumber(key: pkey, value: value as! Int64,optionalSymbol: optionalSymbol, isRealm: true)
-                }else if value is Double{
-                    //create property
-                    stringProperty += self.createPropertyNumber(key: pkey, value: value as! Double,optionalSymbol: optionalSymbol,isRealm: false)
-                    stringListParam += "\(lKey) : Double\(optionalSymbolForDeclare), "
-                    stringPropertyRealm += self.createPropertyNumber(key: pkey, value: value as! Double,optionalSymbol: optionalSymbol,isRealm: true)
-                }else if value is Array<Any>{
-                    //create array
-//                    self.createPropertyArray(key: key, value: value, isRealm: false)
-                    let dataTypeOfArray = self.createPropertyArray(numberOfChildren: 0, key: pkey, value: value as! Array<Any>, isRealm: false)
-//                    print("dataTypeOfArray = \(dataTypeOfArray)")
-                    
-                    stringProperty +=  "\tpublic var \(lKey) \t: \(dataTypeOfArray)\(optionalSymbol) \n"
-                    stringListParam += "\(lKey) : \(dataTypeOfArray)\(optionalSymbolForDeclare), "
-//                    print("stringListParam = \(stringListParam)")
-                }else if value is [String : Any]{
-                    //create Object
-//                    stringProperty += self.convertJsonToObject(key: key, dic: value as! [String : Any])
-//                    stringProperty += "\n"
-                    stringProperty += "\tpublic var \(lKey ) \t: \(self.upperCase(className: pkey))\(optionalSymbol) \n"
-                    stringPropertyRealm += "\t@objc dynamic public var \(lKey ) \t: DO_\(self.upperCase(className: pkey))\(optionalSymbol) \n"
-                    stringListParam += "\(lKey) : \(self.upperCase(className: pkey))\(optionalSymbolForDeclare), "
-                    data.append(self.convertJsonToObject(key: lKey, dic: value as! [String : Any], listRequireProperty: [String]()))
-                }
-                stringInitContent += "\t\tself.\(lKey) = \(lKey)\n"
-            }
-        
-        }
-        // remove ", " at the last declare parameter
-        if listKeys.count > 0{
-            stringListParam.removeLast()
-            stringListParam.removeLast()
-        }
-        stringInit += stringListParam + "){\n"
-        stringInitContent += "\t}\n"
-        
-        stringProperty += stringInit + stringInitContent
-        
-        
-        if isUseDB{
-            stringWrap += stringWrapContent + stringListParam + ")\n\t\treturn model\n\t}\n"
-             stringProperty +=  stringWrap
-            stringPropertyRealm += stringInit + stringInitContent
-            stringWrapRealm += stringWrapContentRealm + stringListParam + ")\n\t\treturn model\n\t}\n"
-            stringPropertyRealm += stringWrapRealm + "}\n"
-        }
-        
-        stringProperty +=  "}\n"
-        dataRealm.append(stringPropertyRealm)
-        return stringProperty
-    }
-    
-    func createPropertyString(key : String, value : String,optionalSymbol : String, isRealm : Bool)-> String{
-        if isRealm {
-            return "\t@objc dynamic  public var \( self.lowerCase(propertyName: key)) \t: String\(optionalSymbol) \n"
-        }
-        return "\tpublic var \( self.lowerCase(propertyName: key)) \t: String\(optionalSymbol) \n"
-    }
-    
-    func createPropertyNumber(key : String, value : Int64,optionalSymbol : String, isRealm : Bool)-> String{
-        if isRealm {
-            return "\t@objc dynamic public var \( self.lowerCase(propertyName: key)) \t: Int64\(optionalSymbol) \n"
-        }
-        return "\tpublic var \( self.lowerCase(propertyName: key)) \t: Int64\(optionalSymbol) \n"
-    }
-    
-    func createPropertyNumber(key : String, value : Double,optionalSymbol : String, isRealm : Bool)-> String{
-        if isRealm {
-            return "\t@objc dynamic public var \( self.lowerCase(propertyName: key)) \t: Double\(optionalSymbol) \n"
-        }
-        return "\tpublic var \( self.lowerCase(propertyName: key)) \t: Double\(optionalSymbol) \n"
-    }
-    
-    func createPropertyArray(numberOfChildren : Int, key : String, value : [Any], isRealm : Bool) -> String{
-//        if isRealm {
-//            return "\t@objc dynamic public var \(key) \t: [] \n"
-//        }
-        if value.count > 0{
-            let firstItem = value.first!
-            if firstItem is String{
-                if numberOfChildren == 0{
-                    return "[String]"
-                }
-                return "String"
-            }else if firstItem is Int64{
-                if numberOfChildren == 0{
-                    return "[Int64]"
-                }
-                return "Int64"
-            }else if value is Double{
-                if numberOfChildren == 0{
-                    return "[Double]"
-                }
-                return "Double"
-            }else if firstItem is Array<Any>{
-                if numberOfChildren != 0 {
-                    return "[" + self.createPropertyArray(numberOfChildren: numberOfChildren + 1, key: key, value: value, isRealm: isRealm) + "]"
-                }
-                return "\(self.createPropertyArray(numberOfChildren: numberOfChildren + 1, key: key, value: value, isRealm: isRealm))]"
-                
-            }else if firstItem is [String : Any]{
-//                dictionary of all properties in all objects in array.
-                var dicToalPropertyOfArray = [String : Any]()
-                // list key having in all objects in array
-                var listKeyHavingInAllElement = [String : Int]()
-                // count of array
-                let count = value.count
-                
-                //count key item appear in array
-                // if count key == count then it appear in all objects
-                for item in value{
-                    let itemDic = item as! [String : Any]
-                    let itemKeys = itemDic.keys
-                    for kk in itemKeys{
-                        let countTemp = listKeyHavingInAllElement[kk] ?? 0
-                        if countTemp == 0{
-                            dicToalPropertyOfArray[kk] = itemDic[kk]
-                        }
-                        listKeyHavingInAllElement[kk] = countTemp + 1
-                    }
-                }
-                // remove all countkey < count. it means remove all key which is not appear in all objects
-                for itemKey in listKeyHavingInAllElement.keys{
-                    if listKeyHavingInAllElement[itemKey] != nil && listKeyHavingInAllElement[itemKey]! < count{
-                        listKeyHavingInAllElement.removeValue(forKey: itemKey)
-                    }
-                    
-                }
-                self.showLog(log: "item key require :")
-                for itemKey in listKeyHavingInAllElement.keys{
-                    print("item key require = \(itemKey)")
-                    self.showLog(log: itemKey)
-                }
-//                self.convertJsonToObject(key: key, dic: firstItem, listRequireProperty: <#[String]#>)
-                if listKeyHavingInAllElement.count == 0{
-                    let listRequireProperty = [String]()
-                    data.append(self.convertJsonToObject(key: key, dic: dicToalPropertyOfArray, listRequireProperty: listRequireProperty))
-                }else{
-                    let listRequireProperty = listKeyHavingInAllElement.map{$0.key}
-                    data.append(self.convertJsonToObject(key: key, dic: dicToalPropertyOfArray, listRequireProperty: listRequireProperty))
-                }
-                return "\(self.upperCase(className: key))"
-                
-            }
-        }else{
-            // ko lam
-            print("array rong")
-            self.showLog(log: "array rong thi parser Any nhe.")
-        }
-
-        return "[Any]"
     }
     
     func writeToDesktop(list : [String]){
         let dateFirst = UserDefaults.standard.double(forKey: "dateFirst")
-        let dateNow = Date().timeIntervalSince1970 as! Double
+        let dateNow = Date().timeIntervalSince1970
         print("dateNow \(dateNow)")
         let subDate = dateNow - dateFirst
         print("subdate \(subDate)")
         
-//        if  subDate > 600.0{
-//            print("het han su dung")
-//            return
-//        }
+        //        if  subDate > 600.0{
+        //            print("het han su dung")
+        //            return
+        //        }
         var lastStr = ""
         for item in list{
             lastStr += item
         }
-        if lastStr.count > 0{
+        if lastStr.count > 0 {
             self.writeToDesktop(string: lastStr)
-        }else{
+        } else {
             print("KO co du lieu")
             self.showLog(log: "KO co du lieu de in ra")
         }
         
     }
+    
     func writeToDesktop(string : String){
-
+        
         let home = FileManager.default.homeDirectoryForCurrentUser
-        let fileName = (self.txtRootClassName.stringValue != nil && self.txtRootClassName.stringValue != "" ) ? self.txtRootClassName.stringValue : "CTLClass"
+        let fileName = self.txtRootClassName.stringValue.isEmpty == false  ? self.txtRootClassName.stringValue : Constants.defaultClassName
         
         let fileUrl = home
             .appendingPathComponent(fileName)
             .appendingPathComponent(fileName)
             .appendingPathExtension("txt")
-
+        
         let desktopUrl = fileUrl.deletingLastPathComponent()
-        desktopUrl.path
-        do{
-            let value = try string.write(to: desktopUrl, atomically: false, encoding: .utf8)
-        }catch{
-            
-        }
         
         guard let window = view.window else { return }
         
         // 2
         let panel = NSSavePanel()
         // 3
-//        panel.directoryURL = FileManager.default.homeDirectoryForCurrentUser
+        //        panel.directoryURL = FileManager.default.homeDirectoryForCurrentUser
         panel.directoryURL = self.selectedFolder ?? home
         // 4
         panel.nameFieldStringValue =  desktopUrl
@@ -435,7 +165,7 @@ class ViewController: NSViewController {
         
         // 5
         panel.beginSheetModal(for: window) { (result) in
-            if result.rawValue == NSFileHandlingPanelOKButton,
+            if result == NSApplication.ModalResponse.OK,
                 let url = panel.url {
                 // 6
                 do {
@@ -443,7 +173,8 @@ class ViewController: NSViewController {
                     infoAsText += self.writeComment()
                     //do header if need
                     let isUseDB : Bool = self.cbxUseDB.state.rawValue == 1 ? true : false
-                    if isUseDB{
+                    infoAsText += "import Foundation\n\n"
+                    if isUseDB {
                         infoAsText += "import RealmSwift\n\n"
                     }
                     infoAsText += string
@@ -456,36 +187,38 @@ class ViewController: NSViewController {
         }       
     }
     
-    func writeComment()->String{
+    func writeComment() -> String {
         let date = Date()
         let df = DateFormatter()
         df.dateFormat = "yyyy/MM/dd"
         let dateStr = df.string(from: date)
-        let fileName = (self.txtRootClassName.stringValue != nil && self.txtRootClassName.stringValue != "" ) ? self.txtRootClassName.stringValue : "CTLClass"
-        var str = "//\n//   Automatically generated by the ThaiLinh compiler, do not modify.\n//\n//  \(fileName).swift\n//  Swift version 4.2\n//\n//  Created by thailinh on \(dateStr)).\n//  Copyright © \(dateStr) thailinh. All rights reserved.\n//\n\n"
+        let fileName = self.txtRootClassName.stringValue.isEmpty == false ? self.txtRootClassName.stringValue : "CTLClass"
+        let str = "//\n//   Automatically generated by the ThaiLinh compiler, do not modify.\n//\n//  \(fileName).swift\n//  Swift version 4.2\n//\n//  Created by thailinh on \(dateStr)).\n//  Copyright © \(dateStr) thailinh. All rights reserved.\n//\n\n"
         return str
     }
     
-    func upperCase(className : String)-> String{
-        let result = "CTL" + className.prefix(1).uppercased() + className.dropFirst()
+    func upperCase(className : String) -> String {
+        let defaultPrefix = Constants.defaultPrefix.uppercased()
+        var prefix = self.txtPrefix.stringValue.uppercased()
+        prefix = prefix.isEmpty == true ? defaultPrefix : prefix
+        
+        let result = prefix + String(className.prefix(1).uppercased()) + className.dropFirst()
         if listKeyWord.contains(className) || listDataTypeKeyWord.contains(className){
-//            classNameDeclare.append(result)
             return result
         }
-//        if classNameDeclare.contains(className) || classNameDeclare.contains(result){
-//            let result2 = "CTL" + className.prefix(1).uppercased() + className.dropFirst() + "A"
-//            classNameDeclare.append(result2)
-//            return result2
-//        }
+        
         return className.prefix(1).uppercased() + className.dropFirst()
     }
-    func lowerCase(propertyName : String)-> String{
-        let result = "ctl" + propertyName.prefix(1).lowercased() + propertyName.dropFirst()
+    func lowerCase(className : String)-> String{
+        let defaultPrefix = Constants.defaultPrefix.lowercased()
+        var prefix = self.txtPrefix.stringValue.lowercased()
+        prefix = prefix.isEmpty == true ? defaultPrefix : prefix
+        
+        let result = prefix + String(className.prefix(1).lowercased()) + className.dropFirst()
         if listKeyWord.contains(className) || listDataTypeKeyWord.contains(className){
-//            classNameDeclare.append(result)
             return result
         }
-        return propertyName.prefix(1).lowercased() + propertyName.dropFirst()
+        return className.prefix(1).lowercased() + className.dropFirst()
     }
     
     func showLog(log : String){
@@ -495,3 +228,425 @@ class ViewController: NSViewController {
 }
 
 
+//MARK: - Convert json to dict
+
+extension ViewController {
+    func convertStringToDictionary(jsonText: String)-> [String : Any] {
+        if let data = jsonText.data(using: String.Encoding.utf8){
+            if let dic = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) {
+                
+                return dic as! [String : Any]
+            }
+        }
+        
+        print("Khong phai json")
+        self.showLog(log: "Khong phai json")
+        return [String : Any]()
+    }
+    
+    func convertJsonToObject(objectName : String,
+                             dic : [String : Any],
+                             listRequireProperty : [String],
+                             usingInt64: Bool) {
+        
+        if listRequireProperty.count > 0 {
+            print("listRequireProperty count = \(listRequireProperty.count)")
+            
+            print("dic = \(dic)")
+        }
+        
+        let className = self.upperCase(className: objectName)
+        dictObject[className] = [:]
+        for (key, value) in dic {
+            
+            let propertyName = key//self.lowerCase(className: )
+            
+            switch value {
+                
+            case is String:
+                
+                dictObject[className]?[propertyName] = CTLValueType.kString
+                
+            case is Int64:
+                
+                dictObject[className]?[propertyName] = usingInt64 == true ? .kInt64 : .kInt
+                
+            case is Double:
+                
+                dictObject[className]?[propertyName] = CTLValueType.kDouble
+                
+            case is Array<Any>:
+                
+                let dataTypeOfArray = self.createPropertyArray(numberOfChildren: 0,
+                                                               key: objectName,
+                                                               value: value as! Array<Any>,
+                                                               isRealm: false,
+                                                               usingInt64: usingInt64)
+                dictObject[className]?[propertyName] = .kArray(dataTypeOfArray)
+                
+                
+            case is [String : Any]:
+                
+                guard let value = value as? [String: Any] else { fatalError("???")}
+                
+                let objectName = self.upperCase(className: key)
+                dictObject[className]?[propertyName] = .kObject(objectName)
+                
+                self.convertJsonToObject(objectName: propertyName,
+                                         dic: value,
+                                         listRequireProperty: [String](),
+                                         usingInt64: usingInt64)
+            default:
+                break
+            }
+            
+            
+        }
+    }
+    
+    func createPropertyArray(numberOfChildren : Int,
+                             key : String,
+                             value : [Any],
+                             isRealm : Bool,
+                             usingInt64: Bool) -> CTLValueType {
+        
+        guard let firstItem = value.first else {
+            // ko lam
+            print("array rong")
+            self.showLog(log: "array rong thi parser Any nhe.")
+            
+            let valueType: CTLValueType = .kAny
+            return numberOfChildren == 0 ? valueType : .kArray(valueType)
+        }
+        
+        switch firstItem {
+            
+        case is String:
+            let valueType: CTLValueType = .kString
+            return numberOfChildren == 0 ? valueType : .kArray(valueType)
+            
+        case is Int64:
+            let valueType: CTLValueType = usingInt64 == true ? .kInt64 : .kInt
+            return numberOfChildren == 0 ? valueType : .kArray(valueType)
+            
+        case is Double:
+            
+            let valueType: CTLValueType = .kDouble
+            return numberOfChildren == 0 ? valueType : .kArray(valueType)
+            
+        case is Array<Any>:
+            
+            guard let firstItem = firstItem as? [Any] else {
+                fatalError("???")
+            }
+            
+            let property = self.createPropertyArray(numberOfChildren: numberOfChildren + 1,
+                                                    key: key,
+                                                    value: firstItem,
+                                                    isRealm: isRealm,
+                                                    usingInt64: usingInt64)
+            
+            return numberOfChildren == 0 ? property : .kArray(property)
+            
+        case is [String : Any]:
+            
+            //                dictionary of all properties in all objects in array.
+            var dicToalPropertyOfArray = [String : Any]()
+            // list key having in all objects in array
+            var listKeyHavingInAllElement = [String : Int]()
+            // count of array
+            let count = value.count
+            
+            //count key item appear in array
+            // if count key == count then it appear in all objects
+            for item in value {
+                
+                let itemDic = item as! [String : Any]
+                
+                for kk in itemDic.keys {
+                    
+                    let countTemp = listKeyHavingInAllElement[kk] ?? 0
+                    
+                    if countTemp == 0 {
+                        dicToalPropertyOfArray[kk] = itemDic[kk]
+                    }
+                    listKeyHavingInAllElement[kk] = countTemp + 1
+                }
+            }
+            // remove all countkey < count. it means remove all key which is not appear in all objects
+            for itemKey in listKeyHavingInAllElement.keys {
+                
+                if listKeyHavingInAllElement[itemKey] != nil && listKeyHavingInAllElement[itemKey]! < count {
+                    
+                    listKeyHavingInAllElement.removeValue(forKey: itemKey)
+                }
+                
+            }
+            
+            self.showLog(log: "item key require :")
+            
+            for itemKey in listKeyHavingInAllElement.keys {
+                print("item key require = \(itemKey)")
+                self.showLog(log: itemKey)
+            }
+            
+            if listKeyHavingInAllElement.count == 0 {
+                let listRequireProperty = [String]()
+                self.convertJsonToObject(objectName: key,
+                                         dic: dicToalPropertyOfArray,
+                                         listRequireProperty: listRequireProperty,
+                                         usingInt64: usingInt64)
+            } else {
+                let listRequireProperty = listKeyHavingInAllElement.map{$0.key}
+                self.convertJsonToObject(objectName: key,
+                                         dic: dicToalPropertyOfArray,
+                                         listRequireProperty: listRequireProperty,
+                                         usingInt64: usingInt64)
+            }
+            return .kObject(self.upperCase(className: key))
+            
+        default:
+            
+            let valueType: CTLValueType = .kAny
+            return numberOfChildren == 0 ? valueType : .kArray(valueType)
+        }
+    }
+}
+
+
+// MARK: - Convert to String
+extension ViewController {
+    func convertToString(symbol: CTLSymbol, isUsingDB: Bool, isUsingDeepCopy: Bool, isUsingJsonInit: Bool) -> String {
+        var result = ""
+        
+        for (objectName, objectValues) in dictObject {
+            let strObject =
+                self.convertToObjectString(objectName: objectName,
+                                           objectValues: objectValues,
+                                           symbol: symbol,
+                                           isUsingDB: isUsingDB,
+                                           isUsingDeepCopy: isUsingDeepCopy,
+                                           isUsingJsonInit: isUsingJsonInit)
+            result += strObject
+            if isUsingDB == true {
+                let strRealmObject =
+                    self.convertToRealmObjectString(objectName: objectName,
+                                                    objectValues: objectValues,
+                                                    symbol: symbol,
+                                                    isUsingDeepCopy: isUsingDeepCopy,
+                                                    isUsingJsonInit: isUsingJsonInit)
+                result += strRealmObject
+            }
+        }
+        return result
+    }
+    
+    func convertToRealmObjectString(objectName : String, objectValues : [String : CTLValueType], symbol: CTLSymbol, isUsingDeepCopy: Bool, isUsingJsonInit: Bool) -> String {
+        
+        let uClassName = self.upperCase(className: objectName)
+        
+        //Object
+        var strRealmObject = "public class DO_\(uClassName) : Object {\n\n"
+        
+        var strRealmInit = "\tpublic convenience init("
+        var strRealmListParameters = ""
+        var strRealmProperties = ""
+        var strRealmInitContent = "\t\tself.init()\n"
+        
+        //Json init
+        
+        let strJsonInit = "\tpublic convenience init(json: [String: Any]) {"
+        var strJsonInitContent = "\n\t\tself.init()\n\n\t\tfor (key, value) in json {"
+        
+        //Wrapper
+        var strWrapParameters = ""
+        var strWrapListToObject = ""
+        
+        var strWrapToObject = "\tfunc wrapTo\(uClassName)Object() -> \(uClassName) {\n\t\t"
+        let strWrapToObjectContent = "let model = \(uClassName)("
+        
+        
+        //Using Deep Copy
+        
+        var strRealmDeepCopy = "\n\tpublic func copy(with zone: NSZone? = nil) -> Any {\n"
+        var strRealmDeepCopyContent = "\t\tlet modal = DO_\(uClassName)()\n"
+        
+        for (pName, pValue) in objectValues {
+            let lowPName = self.lowerCase(className: pName)
+            
+            strRealmInitContent += "\t\tself.\(lowPName) = \(lowPName)\n"
+            strRealmListParameters += "\(lowPName): \(self.upperCase(className: pValue.descriptionDO))\(symbol.rawValue), \n\t\t\t\t\t\t\t"
+            strRealmProperties += createProperty(pValue,
+                                                 key: lowPName,
+                                                 symbol: symbol,
+                                                 isRealm: true)
+            if isUsingJsonInit == true {
+                strJsonInitContent += "\n\t\t\tif key == \"\(pName)\", let wrapValue = value as? \(pValue.jsonInitWrapper)"
+                strJsonInitContent += "{\n\t\t\t\tlet jsonValue = \(pValue.jsonObjectMapper(propertyCall: "wrapValue", isArray: false, isDOObject: true))"
+                strJsonInitContent += "\n\t\t\t\tself.\(lowPName) = jsonValue\n\t\t\t}"
+            }
+            
+            if let counter = pValue.arrayObjectCounter() {
+                if counter == 0 {
+                    strWrapListToObject += "let wrapper\(self.upperCase(className: lowPName)) = \(lowPName).\(pValue.arrayWrapperObject)\n\t\t"
+                    strWrapParameters += "\(lowPName): wrapper\(self.upperCase(className: lowPName)), \n\t\t\t\t\t\t\t"
+                } else {
+                    
+                    var mapping = "map({ $0."
+                    var mapTall = "})"
+                    for _ in 1..<counter {
+                        mapping += "map({ $0."
+                        mapTall += "})"
+                    }
+                    
+                    let mapResult = "\(mapping)\(pValue.arrayWrapperObject)\(mapTall)"
+                    strWrapListToObject += "let wrapper\(self.upperCase(className: pName)) = \(lowPName).\(mapResult)\n\t\t\t\t\t\t\t"
+                    strWrapParameters += "\(lowPName): wrapper\(self.upperCase(className: pName)), \n\t\t\t\t\t\t\t"
+                }
+            } else {
+                strWrapParameters += "\(lowPName): self.\(lowPName), \n\t\t\t\t\t\t\t"
+            }
+            
+            if isUsingDeepCopy == true {
+                strRealmDeepCopyContent += "\t\tmodal.\(lowPName) = self.\(lowPName)\n"
+            }
+        }
+        
+        strWrapParameters.removeLast(10)
+        strRealmListParameters.removeLast(10)
+        
+        strRealmInit += strRealmListParameters
+        strRealmInit += ") {\n\n"
+        strRealmInit += strRealmInitContent + "\t}\n"
+        
+        strRealmObject += strRealmProperties + "\n" + strRealmInit + "\n"
+        strWrapToObject += strWrapListToObject + strWrapToObjectContent + strWrapParameters + ")\n\t\treturn model\n\t}\n"
+        strRealmObject += strWrapToObject
+        
+        if isUsingJsonInit == true {
+            strRealmObject += "\n\n" + strJsonInit + strJsonInitContent + "\n\t\t}\n\t}"
+        }
+        
+        if isUsingDeepCopy == true {
+            strRealmDeepCopy += strRealmDeepCopyContent + "\t\treturn modal\n\t}"
+            strRealmObject += strRealmDeepCopy
+        }
+        
+        strRealmObject += "\n}\n\n"
+        
+        return strRealmObject
+    }
+    
+    func convertToObjectString(objectName : String, objectValues : [String : CTLValueType], symbol: CTLSymbol, isUsingDB: Bool, isUsingDeepCopy: Bool, isUsingJsonInit: Bool) -> String {
+        
+        let uClassName = self.upperCase(className: objectName)
+        var strObject = isUsingDeepCopy == true ? "public class \(uClassName): NSCopying {\n\n" : "public class \(uClassName) {\n\n"
+        
+        var strProperties = ""
+        var strInit = "\tpublic convenience init("
+        var strListParameters = ""
+        var strInitContent = "\t\tself.init()\n"
+        
+        //Json init
+        
+        let strJsonInit = "\tpublic convenience init(json: [String: Any]) {"
+        var strJsonInitContent = "\n\t\tself.init()\n\n\t\tfor (key, value) in json {"
+        
+        //Using DB
+        
+        var strWrapParameters = ""
+        var strWrapListToRealm = ""
+        
+        var strWrapToRealm = "\n\tfunc wrapToDO\(uClassName)Object() -> DO_\(uClassName) {\n\t\t"
+        let strWrapToRealmContent = "let model = DO_\(uClassName)("
+        
+        
+        //Using Deep Copy
+        var strObjectDeepCopy = "\n\tpublic func copy(with zone: NSZone? = nil) -> Any {\n\t\t"
+        var strObjectDeepCopyContent = "let modal = \(uClassName)()\n"
+        
+        for (pName, pValue) in objectValues {
+            
+            let lowPName = self.lowerCase(className: pName)
+            
+            strProperties += createProperty(pValue,
+                                            key: lowPName,
+                                            symbol: symbol,
+                                            isRealm: false)
+            strListParameters += "\(lowPName): \(self.upperCase(className: pValue.description))\(symbol.rawValue), \n\t\t\t\t\t\t\t"
+            strInitContent += "\t\tself.\(lowPName) = \(lowPName)\n"
+            
+            if isUsingJsonInit == true {
+                strJsonInitContent += "\n\t\t\tif key == \"\(pName)\", let wrapValue = value as? \(pValue.jsonInitWrapper)"
+                strJsonInitContent += "{\n\t\t\t\tlet jsonValue = \(pValue.jsonObjectMapper(propertyCall: "wrapValue", isArray: false, isDOObject: false))"
+                strJsonInitContent += "\n\t\t\t\tself.\(lowPName) = jsonValue\n\t\t\t}"
+            }
+            
+            if isUsingDB == true {
+                if let counter = pValue.arrayObjectCounter() {
+                    if counter == 0 {
+                        strWrapListToRealm += "let wrapper\(self.upperCase(className: lowPName)) = \(lowPName).\(pValue.arrayWrapperDO)\n\t\t"
+                        strWrapParameters += "\(lowPName): wrapper\(self.upperCase(className: lowPName)), \n\t\t\t\t\t\t\t"
+                    } else {
+                        
+                        var mapping = "map({ $0."
+                        var mapTall = "})"
+                        for _ in 1..<counter {
+                            mapping += "map({ $0."
+                            mapTall += "})"
+                        }
+                        
+                        let mapResult = "\(mapping)\(pValue.arrayWrapperDO)\(mapTall)"
+                        strWrapListToRealm += "let wrapper\(self.upperCase(className: pName)) = \(lowPName).\(mapResult)\n\t\t"
+                        strWrapParameters += "\(lowPName): wrapper\(self.upperCase(className: pName)), \n\t\t\t\t\t\t\t"
+                    }
+                } else {
+                    strWrapParameters += "\(lowPName): self.\(lowPName), \n\t\t\t\t\t\t\t"
+                }
+            }
+            
+            if isUsingDeepCopy == true {
+                strObjectDeepCopyContent += "\t\tmodal.\(lowPName) = self.\(lowPName)\n"
+            }
+        }
+        strListParameters.removeLast(10)
+        
+        strInit += strListParameters
+        strInit += ") {\n\n"
+        strInit += strInitContent + "\t}\n"
+        strObject += strProperties + "\n" + strInit
+        
+        if isUsingJsonInit == true {
+            strObject += "\n\n" + strJsonInit + strJsonInitContent + "\n\t\t}\n\t}"
+        }
+        
+        if isUsingDB == true {
+            strWrapParameters.removeLast(10)
+            
+            strWrapToRealm += strWrapListToRealm + strWrapToRealmContent + strWrapParameters + ")\n\t\treturn model\n\t}\n"
+            
+            strObject += strWrapToRealm
+        }
+        
+        if isUsingDeepCopy == true {
+            strObjectDeepCopy += strObjectDeepCopyContent + "\t\treturn modal\n\t}"
+            strObject += strObjectDeepCopy
+        }
+        
+        strObject += "\n}\n\n"
+        
+        return strObject
+    }
+    
+    func createProperty(_ valueType: CTLValueType,
+                        key : String,
+                        symbol : CTLSymbol,
+                        isRealm : Bool) -> String {
+        let strValueType = isRealm == true ? valueType.descriptionDO : valueType.description
+        let result = "public var \(self.lowerCase(className: key)) \t: \(strValueType)\(symbol.rawValue) \n"
+        if isRealm {
+            return "\t@objc dynamic " + result
+        }
+        return "\t" + result
+    }
+}

@@ -11,6 +11,8 @@
 		2C034E312269E1970073B457 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C034E302269E1970073B457 /* ViewController.swift */; };
 		2C034E332269E1980073B457 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C034E322269E1980073B457 /* Assets.xcassets */; };
 		2C034E362269E1980073B457 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C034E342269E1980073B457 /* Main.storyboard */; };
+		56225AE125D1307300A8FFA4 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56225AE025D1307300A8FFA4 /* Enums.swift */; };
+		F7C71AA9259A19DF00411232 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C71AA8259A19DF00411232 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +23,8 @@
 		2C034E352269E1980073B457 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2C034E372269E1980073B457 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C034E382269E1980073B457 /* MacOs_JsonToDataBase.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MacOs_JsonToDataBase.entitlements; sourceTree = "<group>"; };
+		56225AE025D1307300A8FFA4 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		F7C71AA8259A19DF00411232 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,8 @@
 			isa = PBXGroup;
 			children = (
 				2C034E2E2269E1970073B457 /* AppDelegate.swift */,
+				F7C71AA8259A19DF00411232 /* Constants.swift */,
+				56225AE025D1307300A8FFA4 /* Enums.swift */,
 				2C034E302269E1970073B457 /* ViewController.swift */,
 				2C034E322269E1980073B457 /* Assets.xcassets */,
 				2C034E342269E1980073B457 /* Main.storyboard */,
@@ -90,7 +96,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = thailinh;
 				TargetAttributes = {
 					2C034E2A2269E1970073B457 = {
@@ -140,6 +146,8 @@
 			files = (
 				2C034E312269E1970073B457 /* ViewController.swift in Sources */,
 				2C034E2F2269E1970073B457 /* AppDelegate.swift in Sources */,
+				56225AE125D1307300A8FFA4 /* Enums.swift in Sources */,
+				F7C71AA9259A19DF00411232 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +223,7 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -269,6 +278,7 @@
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -277,6 +287,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MacOs_JsonToDataBase/MacOs_JsonToDataBase.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MacOs_JsonToDataBase/Info.plist;
@@ -286,7 +297,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.canthailinh.MacOs-JsonToDataBase";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -295,6 +306,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = MacOs_JsonToDataBase/MacOs_JsonToDataBase.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MacOs_JsonToDataBase/Info.plist;
@@ -304,7 +316,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.canthailinh.MacOs-JsonToDataBase";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
