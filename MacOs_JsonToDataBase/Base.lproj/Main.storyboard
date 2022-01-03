@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15705"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -713,277 +713,92 @@
                             <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Do-nf-RVE">
                                 <rect key="frame" x="10" y="80" width="533" height="439"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="5DH-rx-EI8">
-                                    <rect key="frame" x="0.0" y="0.0" width="518" height="439"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="533" height="439"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="pnC-66-3On">
-                                            <rect key="frame" x="0.0" y="0.0" width="518" height="3878"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="533" height="980"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <size key="minSize" width="518" height="439"/>
+                                            <size key="minSize" width="533" height="439"/>
                                             <size key="maxSize" width="746" height="10000000"/>
                                             <attributedString key="textStorage">
                                                 <fragment>
                                                     <mutableString key="content">{
-  "status": 1,
-  "message": "Pool",
-  "code": 200,
-  "result": {
-    "data": [
-      {
-        "id": "569835685523116032",
-        "base_score": 1,
-        "number_of_click": 0,
-        "number_of_author": 0,
-        "number_of_channel": 0,
-        "author_name": "",
-        "channel": "",
-        "ppr": 1,
-        "publish_date": 1555904614,
-        "instance_type": 0,
-        "card_type": 15,
-        "card": {
-          "id": "569835685523116032",
-          "title": "https://vnexpress.net/the-gioi",
-          "card_type": 15,
-          "mediaunit_name": "Tin nóng trong ngày",
-          "frame_id": 0,
-          "data": [
-            {
-              "image": {
-                "height": 292,
-                "thumb": "https://s.vnecdn.net/vnexpress/restruct/i/v75/logo_default.jpg",
-                "width": 560
-              },
-              "link": "https://vnexpress.net/the-gioi",
-              "sourse": "Tin nhanh VnExpress",
-              "title": "Hú hú"
-            }
-          ],
-          "user": {
-            "id": 1450396749796327,
-            "user_name": "King9_nvt010493",
-            "full_name": "Ngo Thuy",
-            "avatar": "http://kingcontent.mediacdn.vn/2019/4/11/binh3bjn9nlr49agnckg_image1554977194308.867.jpeg",
-            "follow": 0,
-            "is_follow": 0,
-            "type": 0
-          },
-          "card_info": {
-            "tags": [],
-            "feeling": "",
-            "is_comment": 0,
-            "location": "",
-            "liked": 0,
-            "privacy": 0,
-            "share": 0,
-            "total_like": 0,
-            "total_comment": 0,
-            "views": 0,
-            "created_at": 1555904614,
-            "total_repost": 0,
-            "total_post": 0,
-            "total_send": 0
-          },
-          "like": {
-            "total": 0,
-            "type": [],
-            "data": []
-          },
-          "comment": {
-            "total": 0,
-            "data": []
-          }
-        }
-      },
-      {
-        "id": "569821832316514304",
-        "base_score": 1,
-        "number_of_author": 0,
-        "number_of_channel": 0,
-        "author_name": "",
-        "channel": "",
-        "ppr": 1,
-        "publish_date": 1555901311,
-        "instance_type": 0,
-        "number_of_click": 0,
-        "card_type": 6,
-        "card": {
-          "id": "569821832316514304",
-          "title": "Mỗi ngày là một niềm vui",
-          "card_type": 6,
-          "mediaunit_name": "",
-          "frame_id": 0,
-          "data": [
-            {
-              "content_type": 2,
-              "duration": null,
-              "height": 1300,
-              "id": "1e609ed064a911e98c1adf8860715c0e",
-              "is_play": 0,
-              "link": "http://kingcontent.mediacdn.vn/2019/4/22/5583311120327793634439431461324792392056832ojpgnccat106ncocaqkhfkyacxa8jon0b3zmdhtje0nlhlzb6ur0okd41hht2uk1gh8nxx1rmeyd31yi2enchtscontentfhan2-2-1555901277317744807996.jpg",
-              "postion": 0,
-              "thumb": null,
-              "title": "Rừng núi",
-              "type": null,
-              "width": 1920
-            },
-            {
-              "content_type": 2,
-              "duration": null,
-              "height": 1224,
-              "id": "1e5fdb8064a911e98c1adf8860715c0e",
-              "is_play": 0,
-              "link": "http://kingcontent.mediacdn.vn/2019/4/22/5586107820328180534400744616011406976745472ojpgnccat100ncocaqmipljt35ciwcv0dgqrj9mc-xfcp70pwjh-rrkmf77hd-s9knnjxvw1kutalnf8egnchtscontentfhan2-4-155590127732248184968.jpg",
-              "postion": 0,
-              "thumb": null,
-              "title": "Nội thất đẹp",
-              "type": null,
-              "width": 1848
-            }
-          ],
-          "user": {
-            "id": 169922250,
-            "user_name": "cherryhue",
-            "full_name": "Cherry Huệ",
-            "avatar": "http://kingcontent.mediacdn.vn/2019/4/22/5027874123114761190831075459812012072632320njpgnccat105ncocaqkpniyrpjtnp5yrgqczpx9urkp9qjjzsn3szwif2jqnnqqeaidb6hwbtmwwhviibinchtscontentfhan2-4-1555900229187593904712.jpg",
-            "follow": 0,
-            "is_follow": 0,
-            "type": 0
-          },
-          "card_info": {
-            "tags": [],
-            "feeling": "",
-            "is_comment": 0,
-            "location": "",
-            "liked": 0,
-            "privacy": 0,
-            "share": 0,
-            "total_like": 0,
-            "total_comment": 0,
-            "views": 0,
-            "created_at": 1555901311,
-            "total_repost": 0,
-            "total_post": 0,
-            "total_send": 0
-          },
-          "like": {
-            "total": 0,
-            "type": [],
-            "data": []
-          },
-          "comment": {
-            "total": 0,
-            "data": []
-          }
-        }
-      },
-      {
-        "id": "569821574060634112",
-        "base_score": 1,
-        "number_of_click": 0,
-        "number_of_author": 0,
-        "number_of_channel": 0,
-        "author_name": "",
-        "channel": "",
-        "ppr": 1,
-        "publish_date": 1555901249,
-        "instance_type": 0,
-        "card_type": 6,
-        "card": {
-          "id": "569821574060634112",
-          "title": "Một ngày trời đầy nắng",
-          "card_type": 6,
-          "mediaunit_name": "",
-          "frame_id": 0,
-          "data": [
-            {
-              "content_type": 2,
-              "duration": null,
-              "height": 1348,
-              "id": "f9ca516064a811e98c1adf8860715c0e",
-              "is_play": 0,
-              "link": "http://kingcontent.mediacdn.vn/2019/4/22/562424652032709806784232584912509207576576ojpgnccat103ncocaqnneibcslal2otpcmgpnyauxrh1k7zhoskyq1i160btjgivwk80atgqhimcyyq0-ynchtscontentfhan2-1-15559011962371265254297.jpg",
-              "postion": 0,
-              "thumb": null,
-              "title": "Ngôi nhà nhỏ trên mây",
-              "type": null,
-              "width": 2000
-            },
-            {
-              "content_type": 2,
-              "duration": null,
-              "height": 886,
-              "id": "f9c8a3b064a811e98c1adf8860715c0e",
-              "is_play": 0,
-              "link": "http://kingcontent.mediacdn.vn/2019/4/22/5646826520328290534389745389681565565452288njpgnccat111ncocaqkupauq4m2gbqnqdcbpdfejzr6mktkgqdgtuhzoa0pvffqgpb1knuqjlowwh7bpmynchtscontentfhan2-2-15559011962432108974406.jpg",
-              "postion": 0,
-              "thumb": null,
-              "title": "Trời đẹp và xanh bao la",
-              "type": null,
-              "width": 960
-            },
-            {
-              "content_type": 2,
-              "duration": null,
-              "height": 1038,
-              "id": "f9c8f1d064a811e98c1adf8860715c0e",
-              "is_play": 0,
-              "link": "http://kingcontent.mediacdn.vn/2019/4/22/5620514620328352834383512633068896684343296ojpgnccat108ncocaqmgqpfvxlrn-9tslef8ctf2felyu2buk4wnltwysni6rnovsrcfmub-vnt-nnetgtgnchtscontentfhan2-3-1555901196248438389877.jpg",
-              "postion": 0,
-              "thumb": null,
-              "title": "Cảnh sắc về đêm",
-              "type": null,
-              "width": 2000
-            }
-          ],
-          "user": {
-            "id": 169922250,
-            "user_name": "cherryhue",
-            "full_name": "Cherry Huệ",
-            "avatar": "http://kingcontent.mediacdn.vn/2019/4/22/5027874123114761190831075459812012072632320njpgnccat105ncocaqkpniyrpjtnp5yrgqczpx9urkp9qjjzsn3szwif2jqnnqqeaidb6hwbtmwwhviibinchtscontentfhan2-4-1555900229187593904712.jpg",
-            "follow": 0,
-            "is_follow": 0,
-            "type": 0
-          },
-          "card_info": {
-            "tags": [],
-            "feeling": "",
-            "is_comment": 0,
-            "location": "",
-            "liked": 0,
-            "privacy": 0,
-            "share": 0,
-            "total_like": 0,
-            "total_comment": 0,
-            "views": 0,
-            "created_at": 1555901249,
-            "total_repost": 0,
-            "total_post": 0,
-            "total_send": 0
-          },
-          "like": {
-            "total": 0,
-            "type": [],
-            "data": []
-          },
-          "comment": {
-            "total": 0,
-            "data": []
-          }
-        }
-      }
-    ],
-    "boxId": 2,
-    "dspId": "2",
-    "algId": "2"
-  }
+  "id": 9,
+  "name": "Duy Đoan",
+  "last_name": "Nguyễn",
+  "username": "0983817616",
+  "contact_email": "nduydoan1@gmail.com",
+  "card_id": null,
+  "home_address": "364 Cộng Hòa, Phường 13, Quận Tân Bình, Thành phố Hồ Chí Minh",
+  "address": "364 Cộng Hòa",
+  "province_code": "79",
+  "district_code": "766",
+  "ward_code": "26974",
+  "birth_date": "1987-09-02",
+  "avatar": null,
+  "degree": null,
+  "academic_rank": null,
+  "majors_id": 1,
+  "sex": 1,
+  "blood": 0,
+  "is_verify": 0,
+  "verified_at": null,
+  "current_step": 4,
+  "user_type": 2,
+  "balance": 0,
+  "firebase_token": "xxx124abc1",
+  "status": 0,
+  "created_at": "2021-07-24T19:46:48.000000Z",
+  "updated_at": "2021-07-24T19:47:00.000000Z",
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9....",
+  "is_doctor": true,
+  "is_complete": true,
+  "working_hours": [
+    {
+      "day": 1,
+      "open_time": "09:00",
+      "close_time": "15:00"
+    },
+    {
+      "day": 2,
+      "open_time": "09:00",
+      "close_time": "15:00"
+    },
+    {
+      "day": 3,
+      "open_time": "09:00",
+      "close_time": "15:00"
+    },
+    {
+      "day": 4,
+      "open_time": "09:00",
+      "close_time": "15:00"
+    },
+    {
+      "day": 5,
+      "open_time": "09:00",
+      "close_time": "15:00"
+    },
+    {
+      "day": 6,
+      "open_time": "09:00",
+      "close_time": "15:00"
+    },
+    {
+      "day": 7,
+      "open_time": "00:00",
+      "close_time": "00:00"
+    }
+  ],
+  "is_new": false
 }</mutableString>
                                                     <attributes>
                                                         <color key="NSColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <font key="NSFont" metaFont="user"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        <font key="NSFont" size="12" name="Helvetica"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0" allowsDefaultTighteningForTruncation="NO"/>
                                                     </attributes>
                                                 </fragment>
                                             </attributedString>
@@ -991,12 +806,12 @@
                                         </textView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="pQi-hK-xDe">
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="pQi-hK-xDe">
                                     <rect key="frame" x="-100" y="-100" width="518" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="LKf-e0-vvt">
-                                    <rect key="frame" x="518" y="0.0" width="15" height="439"/>
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="LKf-e0-vvt">
+                                    <rect key="frame" x="517" y="0.0" width="16" height="439"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
@@ -1019,8 +834,8 @@
                                     <action selector="btnConvertPress:" target="XfG-lQ-9wD" id="rzu-TX-UnW"/>
                                 </connections>
                             </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GQT-cL-VNR">
-                                <rect key="frame" x="529" y="37" width="94" height="23"/>
+                            <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GQT-cL-VNR">
+                                <rect key="frame" x="528" y="37" width="96" height="23"/>
                                 <buttonCell key="cell" type="roundTextured" title="Select Folder" bezelStyle="texturedRounded" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="HI3-an-0LZ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -1029,7 +844,7 @@
                                     <action selector="btnSelecteFolder:" target="XfG-lQ-9wD" id="oWK-ny-HhC"/>
                                 </connections>
                             </button>
-                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bB0-o8-hVh">
+                            <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bB0-o8-hVh">
                                 <rect key="frame" x="10" y="38" width="514" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" bezelStyle="round" id="HRe-BK-zr3">
                                     <font key="font" metaFont="system"/>
@@ -1058,35 +873,35 @@
                             <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Leq-gV-zBk">
                                 <rect key="frame" x="551" y="80" width="467" height="260"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="LuW-sV-cyb">
-                                    <rect key="frame" x="0.0" y="0.0" width="452" height="260"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="LuW-sV-cyb">
+                                    <rect key="frame" x="0.0" y="0.0" width="467" height="260"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView ambiguous="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="KDa-V4-QPT">
-                                            <rect key="frame" x="0.0" y="0.0" width="452" height="260"/>
+                                        <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="KDa-V4-QPT">
+                                            <rect key="frame" x="0.0" y="0.0" width="467" height="260"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <size key="minSize" width="452" height="260"/>
+                                            <size key="minSize" width="467" height="260"/>
                                             <size key="maxSize" width="467" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="wnK-XN-hrE">
+                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="wnK-XN-hrE">
                                     <rect key="frame" x="-100" y="-100" width="188" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Wzj-uB-qSi">
-                                    <rect key="frame" x="452" y="0.0" width="15" height="260"/>
+                                <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="Wzj-uB-qSi">
+                                    <rect key="frame" x="451" y="0.0" width="16" height="260"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bor-tg-5Bb">
-                                <rect key="frame" x="679" y="430" width="52" height="40"/>
+                                <rect key="frame" x="679" y="430" width="57" height="40"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="8ki-ML-T1L">
-                                        <rect key="frame" x="-1" y="23" width="55" height="18"/>
-                                        <buttonCell key="cell" type="radio" title="Int64" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="zz2-cQ-KTC">
+                                        <rect key="frame" x="-2" y="23" width="59" height="18"/>
+                                        <buttonCell key="cell" type="radio" title="Int64" bezelStyle="regularSquare" imagePosition="left" inset="2" id="zz2-cQ-KTC">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1095,8 +910,8 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="6UT-hd-QyH">
-                                        <rect key="frame" x="-1" y="-1" width="38" height="18"/>
-                                        <buttonCell key="cell" type="radio" title="Int" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Doz-IQ-rEv">
+                                        <rect key="frame" x="-2" y="-1" width="42" height="18"/>
+                                        <buttonCell key="cell" type="radio" title="Int" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Doz-IQ-rEv">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1133,11 +948,11 @@
                                 </textFieldCell>
                             </textField>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" fixedFrame="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WlG-RZ-Ict">
-                                <rect key="frame" x="679" y="371" width="26" height="40"/>
+                                <rect key="frame" x="679" y="371" width="31" height="40"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="jVS-dl-6s6">
-                                        <rect key="frame" x="-1" y="23" width="26" height="18"/>
-                                        <buttonCell key="cell" type="radio" title="!" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ia6-kD-iqq">
+                                        <rect key="frame" x="-2" y="23" width="30" height="18"/>
+                                        <buttonCell key="cell" type="radio" title="!" bezelStyle="regularSquare" imagePosition="left" inset="2" id="ia6-kD-iqq">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1146,8 +961,8 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="Pb4-oo-Xsh">
-                                        <rect key="frame" x="-1" y="-1" width="29" height="18"/>
-                                        <buttonCell key="cell" type="radio" title="?" bezelStyle="regularSquare" imagePosition="left" inset="2" id="tW8-vf-gmI">
+                                        <rect key="frame" x="-2" y="-1" width="33" height="18"/>
+                                        <buttonCell key="cell" type="radio" title="?" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tW8-vf-gmI">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1177,7 +992,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d46-eZ-gy5">
                                 <rect key="frame" x="810" y="382" width="150" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Using json init" bezelStyle="regularSquare" imagePosition="left" inset="2" id="YQa-Xi-2RB">
+                                <buttonCell key="cell" type="check" title="Using json init" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="YQa-Xi-2RB">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>

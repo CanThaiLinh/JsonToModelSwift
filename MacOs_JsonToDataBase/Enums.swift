@@ -19,8 +19,10 @@ indirect enum CTLValueType {
     
     case kInt
     case kInt64
+    case bool
     case kString
     case kDouble
+    case kFloat
     case kAny
     
     var description: String {
@@ -45,6 +47,11 @@ indirect enum CTLValueType {
             
         case .kAny:
             return "Any"
+            
+        case .bool:
+            return "Bool"
+        case .kFloat:
+            return "Float"
         }
     }
     
@@ -70,6 +77,11 @@ indirect enum CTLValueType {
             
         case .kAny:
             return "Any"
+            
+        case .bool:
+            return "Bool"
+        case .kFloat:
+            return "Float"
         }
     }
     
@@ -95,6 +107,12 @@ indirect enum CTLValueType {
             
         case .kAny:
             return "Any"
+        
+        case .bool:
+            return "Bool"
+            
+        case .kFloat:
+            return "Float"
         }
     }
     
