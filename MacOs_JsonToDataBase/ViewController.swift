@@ -286,7 +286,7 @@ extension ViewController {
             case is Array<Any>:
                 
                 let dataTypeOfArray = self.createPropertyArray(numberOfChildren: 0,
-                                                               key: propertyName,
+                                                               key: objectName + "_" + propertyName,
                                                                value: value as! Array<Any>,
                                                                isRealm: false,
                                                                usingInt64: usingInt64)
@@ -297,10 +297,10 @@ extension ViewController {
                 
                 guard let value = value as? [String: Any] else { fatalError("???")}
                 
-                let objectName = self.upperCase(className: key)
+                let objectName = self.upperCase(className: objectName + "_" + propertyName)
                 dictObject[className]?[propertyName] = .kObject(objectName)
                 
-                self.convertJsonToObject(objectName: propertyName,
+                self.convertJsonToObject(objectName: objectName,
                                          dic: value,
                                          listRequireProperty: [String](),
                                          usingInt64: usingInt64)
@@ -533,8 +533,12 @@ extension ViewController {
             }
         }
         
-        strWrapParameters.removeLast(10)
-        strRealmListParameters.removeLast(10)
+        if strWrapParameters.count > 9 {
+            strWrapParameters.removeLast(10)
+        }
+        if strRealmListParameters.count > 9 {
+            strRealmListParameters.removeLast(10)
+        }
         
         strRealmInit += strRealmListParameters
         strRealmInit += ") {\n\n"
@@ -630,7 +634,10 @@ extension ViewController {
                 strObjectDeepCopyContent += "\t\tmodal.\(lowPName) = self.\(lowPName)\n"
             }
         }
-        strListParameters.removeLast(10)
+        
+        if strListParameters.count > 9 {
+            strListParameters.removeLast(10)
+        }
         
         strInit += strListParameters
         strInit += ") {\n\n"
@@ -642,7 +649,9 @@ extension ViewController {
         }
         
         if isUsingDB == true {
-            strWrapParameters.removeLast(10)
+            if strWrapParameters.count > 9 {
+                strWrapParameters.removeLast(10)
+            }
             
             strWrapToRealm += strWrapListToRealm + strWrapToRealmContent + strWrapParameters + ")\n\t\treturn model\n\t}\n"
             
