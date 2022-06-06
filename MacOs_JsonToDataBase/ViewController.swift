@@ -477,7 +477,7 @@ extension ViewController {
         //Json init
         
         let strJsonInit = "\tpublic convenience init(json: [String: Any]) {"
-        var strJsonInitContent = ""
+        var strJsonInitContent = "\n\t\tself.init()"
         
         //Wrapper
         var strWrapParameters = ""
@@ -502,9 +502,9 @@ extension ViewController {
                                                  symbol: symbol,
                                                  isRealm: true)
             if isUsingJsonInit == true {
-                strJsonInitContent += "\n\t\t\tif let wrapValue = json[\"\(pName)\"] as? \(pValue.jsonInitWrapper)"
-                strJsonInitContent += "{\n\t\t\t\tlet jsonValue = \(pValue.jsonObjectMapper(propertyCall: "wrapValue", isArray: false, isDOObject: true))"
-                strJsonInitContent += "\n\t\t\t\tself.\(lowPName) = jsonValue\n\t\t\t}"
+                strJsonInitContent += "\n\t\tif let wrapValue = json[\"\(pName)\"] as? \(pValue.jsonInitWrapper)"
+                strJsonInitContent += "{\n\t\t\tlet jsonValue = \(pValue.jsonObjectMapper(propertyCall: "wrapValue", isArray: false, isDOObject: true))"
+                strJsonInitContent += "\n\t\t\tself.\(lowPName) = jsonValue\n\t\t}"
             }
             
             if let counter = pValue.arrayObjectCounter() {
@@ -549,7 +549,7 @@ extension ViewController {
         strRealmObject += strWrapToObject
         
         if isUsingJsonInit == true {
-            strRealmObject += "\n\n" + strJsonInit + strJsonInitContent + "\n\t\t}\n\t}"
+            strRealmObject += "\n\n" + strJsonInit + strJsonInitContent + "\n\t}"
         }
         
         if isUsingDeepCopy == true {
@@ -575,7 +575,7 @@ extension ViewController {
         //Json init
         
         let strJsonInit = "\tpublic convenience init(json: [String: Any]) {"
-        var strJsonInitContent = ""
+        var strJsonInitContent = "\n\t\tself.init()"
         
         //Using DB
         
@@ -602,9 +602,9 @@ extension ViewController {
             strInitContent += "\t\tself.\(lowPName) = \(lowPName)\n"
             
             if isUsingJsonInit == true {
-                strJsonInitContent += "\n\t\t\tif let wrapValue = json[\"\(pName)\"] as? \(pValue.jsonInitWrapper) "
-                strJsonInitContent += "{\n\t\t\t\tlet jsonValue = \(pValue.jsonObjectMapper(propertyCall: "wrapValue", isArray: false, isDOObject: false))"
-                strJsonInitContent += "\n\t\t\t\tself.\(lowPName) = jsonValue\n\t\t\t}"
+                strJsonInitContent += "\n\t\tif let wrapValue = json[\"\(pName)\"] as? \(pValue.jsonInitWrapper) "
+                strJsonInitContent += "{\n\t\t\tlet jsonValue = \(pValue.jsonObjectMapper(propertyCall: "wrapValue", isArray: false, isDOObject: false))"
+                strJsonInitContent += "\n\t\t\tself.\(lowPName) = jsonValue\n\t\t}"
             }
             
             if isUsingDB == true {
@@ -645,7 +645,7 @@ extension ViewController {
         strObject += strProperties + "\n" + strInit
         
         if isUsingJsonInit == true {
-            strObject += "\n\n" + strJsonInit + strJsonInitContent + "\n\t\t}\n\t}"
+            strObject += "\n\n" + strJsonInit + strJsonInitContent + "\n\t}"
         }
         
         if isUsingDB == true {
