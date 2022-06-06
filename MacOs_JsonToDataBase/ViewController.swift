@@ -477,7 +477,7 @@ extension ViewController {
         //Json init
         
         let strJsonInit = "\tpublic convenience init(json: [String: Any]) {"
-        var strJsonInitContent = "\n\t\tself.init()\n\n\t\tfor (key, value) in json {"
+        var strJsonInitContent = ""
         
         //Wrapper
         var strWrapParameters = ""
@@ -502,9 +502,9 @@ extension ViewController {
                                                  symbol: symbol,
                                                  isRealm: true)
             if isUsingJsonInit == true {
-                strJsonInitContent += "\n\t\t\tif key == \"\(pName)\", let wrapValue = value as? \(pValue.jsonInitWrapper)"
+                strJsonInitContent += "\n\t\t\tif let wrapValue = json[\"\(pName)\"] as? \(pValue.jsonInitWrapper)"
                 strJsonInitContent += "{\n\t\t\t\tlet jsonValue = \(pValue.jsonObjectMapper(propertyCall: "wrapValue", isArray: false, isDOObject: true))"
-                strJsonInitContent += "\n\t\t\t\tself.\(lowPName) = jsonValue\n\t\t\t\tcontinue\n\t\t\t}"
+                strJsonInitContent += "\n\t\t\t\tself.\(lowPName) = jsonValue\n\t\t\t}"
             }
             
             if let counter = pValue.arrayObjectCounter() {
@@ -571,7 +571,7 @@ extension ViewController {
         //Json init
         
         let strJsonInit = "\tpublic convenience init(json: [String: Any]) {"
-        var strJsonInitContent = "\n\t\tself.init()\n\n\t\tfor (key, value) in json {"
+        var strJsonInitContent = ""
         
         //Using DB
         
@@ -598,9 +598,9 @@ extension ViewController {
             strInitContent += "\t\tself.\(lowPName) = \(lowPName)\n"
             
             if isUsingJsonInit == true {
-                strJsonInitContent += "\n\t\t\tif key == \"\(pName)\", let wrapValue = value as? \(pValue.jsonInitWrapper)"
+                strJsonInitContent += "\n\t\t\tif let wrapValue = json[\"\(pName)\"] as? \(pValue.jsonInitWrapper) "
                 strJsonInitContent += "{\n\t\t\t\tlet jsonValue = \(pValue.jsonObjectMapper(propertyCall: "wrapValue", isArray: false, isDOObject: false))"
-                strJsonInitContent += "\n\t\t\t\tself.\(lowPName) = jsonValue\n\t\t\t\tcontinue\n\t\t\t}"
+                strJsonInitContent += "\n\t\t\t\tself.\(lowPName) = jsonValue\n\t\t\t}"
             }
             
             if isUsingDB == true {
